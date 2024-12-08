@@ -274,17 +274,29 @@ blockquote {
       }
 
       #hero .scene-background {
-        background-image: url("https://via.placeholder.com/1920x1080?text=Hero+Background");
+        background-image: url("./asset/bacground\ 1.jpeg");
       }
 
       #couple-info .scene-background {
-        background-image: url("https://via.placeholder.com/1920x1080?text=Couple+Background");
+        background-image: url("./asset/bc\ 5.jpeg");
       }
 
       #gift-section .scene-background {
-        background-image: url("https://via.placeholder.com/1920x1080?text=Gift+Background");
+        background-image: url("./asset/bc\ pay.jpeg");
       }
+      #groom-info .scene-background {
+    background-image: url("./asset/bro__1_-removebg-preview.png"); /* Ganti dengan path gambar latar belakang pria */
+}
 
+#bride-info .scene-background {
+    background-image: url("./asset/brige__1_-removebg-preview.png"); /* Ganti dengan path gambar latar belakang wanita */
+}
+
+#blessing .scene-background {
+    background-image: url("./asset/bc\ 7.jpeg"); /* Ganti dengan path gambar latar belakang doa */
+    background-size: cover; /* Menutupi seluruh area */
+    background-position: center; /* Memusatkan gambar */
+}
       @media (max-width: 768px) {
         .scene-content h2 {
           font-size: 2rem; /* Mengurangi ukuran font untuk judul */
@@ -974,7 +986,8 @@ blockquote {
                 updateNavigationDots(scenes[currentSceneIndex].id);
             });
       // Inisialisasi navigasi saat halaman dimuat
-     
+
+      
     </script>
   </body>
 </html>
