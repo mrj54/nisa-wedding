@@ -907,16 +907,16 @@ blockquote {
     // Initialize Location Details Modal
      
     // Initialize Location Details Modal
-         function initLocationModal() {
+        function initLocationModal() {
                 const locationButton = document.querySelector("#couple-info button");
 
                 locationButton.addEventListener("click", (event) => {
                     event.preventDefault(); // Mencegah aksi default
-                    const locationUrl = "https://www.google.com/maps/search/?api=1&query=Masjid+Alhidayah,+Banjarwangi,+Kecamatan+Banjarwangi,+Kabupaten+Garut"; // URL baru untuk Masjid Alhidayah
+                    const locationUrl = "https://maps.app.goo.gl/2DXSoUwpe9uPnA6VA"; // URL baru untuk Masjid Alhidayah
                     window.open(locationUrl, "_blank"); // Membuka Google Maps di tab baru
                 });
-            }
-            // Panggil fungsi ini saat halaman dimuat
+            } 
+            
             document.addEventListener("DOMContentLoaded", initLocationModal);
   
 
