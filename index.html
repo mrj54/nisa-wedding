@@ -618,19 +618,19 @@ blockquote {
         <h2 class="text-4xl font-bold mb-8">Wedding Gift</h2>
         <div class="bank-logos">
           <img
-            src="https://via.placeholder.com/100?text=Mandiri"
+            src="./assets/dana.jpg"
             alt="Mandiri"
             class="bank-logo"
             onclick="showBankInfo('mandiri')"
           />
           <img
-            src="https://via.placeholder.com/100?text=BNI"
+            src="./assets/bri.png"
             alt="BNI"
             class="bank-logo"
             onclick="showBankInfo('bni')"
           />
           <img
-            src="https://via.placeholder.com/100?text=Jenius"
+            src="./assets/bjb.jpg"
             alt="Jenius"
             class="bank-logo"
             onclick="showBankInfo('jenius')"
@@ -741,7 +741,7 @@ blockquote {
 
       // Countdown Timer Function
       function updateCountdown() {
-        const weddingDate = new Date("December 12, 2024 10:00:00").getTime();
+        const weddingDate = new Date("januari 25, 2025 08:30:00").getTime();
         const now = new Date().getTime();
         const timeRemaining = weddingDate - now;
 
@@ -940,30 +940,41 @@ blockquote {
 
       // Fungsi untuk mengatur slide otomatis
       // Fungsi untuk mengatur slide otomatis
-      let currentSceneIndex = 0;
-      const scenes = document.querySelectorAll(".scene");
+     // Fungsi untuk mengatur slide otomatis
+        // Fungsi untuk mengatur slide otomatis
+            let currentSceneIndex = 0;
+            const scenes = document.querySelectorAll(".scene");
+            const totalScenes = scenes.length; // Menyimpan total jumlah scene
 
-      function showNextScene() {
-        // Sembunyikan scene saat ini
-        scenes[currentSceneIndex].classList.remove("scene-active");
+            function showNextScene() {
+                // Sembunyikan scene saat ini
+                scenes[currentSceneIndex].classList.remove("scene-active");
 
-        // Update index untuk scene berikutnya
-        currentSceneIndex = (currentSceneIndex + 1) % scenes.length;
+                // Update index untuk scene berikutnya
+                currentSceneIndex++;
 
-        // Tampilkan scene berikutnya
-        scenes[currentSceneIndex].classList.add("scene-active");
+                // Jika sudah mencapai scene terakhir, tampilkan scene gift
+                if (currentSceneIndex >= totalScenes) {
+                    currentSceneIndex = totalScenes - 1; // Tetap di scene terakhir
+                    clearInterval(slideInterval); // Hentikan interval
+                }
 
-        // Update navigasi
-        updateNavigationDots(scenes[currentSceneIndex].id);
-      }
+                // Tampilkan scene berikutnya
+                scenes[currentSceneIndex].classList.add("scene-active");
 
-      // Mulai slide otomatis setiap 3 detik
-      setInterval(showNextScene, 3000);
+                // Update navigasi
+                updateNavigationDots(scenes[currentSceneIndex].id);
+            }
 
+            // Mulai slide otomatis setiap 3 detik
+            const slideInterval = setInterval(showNextScene, 3000);
+
+            // Inisialisasi navigasi saat halaman dimuat
+            document.addEventListener("DOMContentLoaded", () => {
+                updateNavigationDots(scenes[currentSceneIndex].id);
+            });
       // Inisialisasi navigasi saat halaman dimuat
-      document.addEventListener("DOMContentLoaded", () => {
-        updateNavigationDots(scenes[currentSceneIndex].id);
-      });
+     
     </script>
   </body>
 </html>
