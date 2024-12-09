@@ -6,13 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>nisa&sahrul wedding</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+    <!-- Firebase Realtime Database -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
         rel="stylesheet" />
     <style>
-       
-       @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
 
         .scene {
             position: relative;
@@ -71,10 +74,13 @@
             /* Menyelaraskan konten di tengah */
         }
 
-        #name, #message {
-    color: black;  /* Teks berwarna hitam */
-    background-color: white;  /* Latar belakang putih untuk input dan textarea */
-}
+        #name,
+        #message {
+            color: black;
+            /* Teks berwarna hitam */
+            background-color: white;
+            /* Latar belakang putih untuk input dan textarea */
+        }
 
 
         .bank-logos {
@@ -309,13 +315,17 @@
         }
 
         .scene {
-        overflow: hidden; /* Mencegah scroll manual */
-        transition: opacity 0.5s ease; /* Transisi halus */
-    }
+            overflow: hidden;
+            /* Mencegah scroll manual */
+            transition: opacity 0.5s ease;
+            /* Transisi halus */
+        }
 
-    .scene-active {
-        overflow: auto; /* Mengizinkan scroll pada scene aktif */
-    }
+        .scene-active {
+            overflow: auto;
+            /* Mengizinkan scroll pada scene aktif */
+        }
+
         .scene-active {
             opacity: 1;
             visibility: visible;
@@ -344,9 +354,11 @@
             transform: translateY(50px);
             transition: all 1s ease-in-out;
         }
- .title {
+
+        .title {
             font-family: 'Dancing Script', cursive;
         }
+
         .scene-active .scene-content {
             opacity: 1;
             transform: translateY(0);
@@ -391,6 +403,14 @@
         #blessing .scene-background {
             background-image: url("./asset/bc\ 8.jpeg");
             /* Ganti dengan path gambar latar belakang doa */
+            background-size: cover;
+            /* Menutupi seluruh area */
+            background-position: center;
+            /* Memusatkan gambar */
+        }
+
+        #comment .scene-background {
+            background-image: url("./asset/bc\ 7.jpeg");
             background-size: cover;
             /* Menutupi seluruh area */
             background-position: center;
@@ -781,343 +801,344 @@
         </div>
     </section>
 
-<!-- Comment Section -->
-<!-- Comment Section -->
-<section id="comment-section" class="scene">
-    <div class="scene-background"></div>
-    <div class="scene-content">
-        <h2 class="text-4xl font-bold mb-8">Leave a Comment</h2>
-        <form id="comment-form">
-            <input type="text" id="name" placeholder="Your Name" required
-                class="w-full px-4 py-2 mb-4 border rounded-md">
-            <textarea id="message" placeholder="Your Message" required
-                class="w-full px-4 py-2 mb-4 border rounded-md"></textarea>
-            <button type="submit"
-                class="cinematic-button px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700">
-                Post Comment
-            </button>
-        </form>
+    <!-- Comment Section -->
+    <!-- Comment Section -->
+    <section id="comment-section" class="scene">
+        <div class="scene-background"></div>
+      
+        <div class="scene-content">
+            <h2 class="text-4xl font-bold mb-8">Leave a Comment</h2>
+            <form id="comment-form">
+                <input type="text" id="name" placeholder="Your Name" required
+                    class="w-full px-4 py-2 mb-4 border rounded-md">
+                <textarea id="message" placeholder="Your Message" required
+                    class="w-full px-4 py-2 mb-4 border rounded-md"></textarea>
+                <button type="submit"
+                    class="cinematic-button px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700">
+                    Post Comment
+                </button>
+            </form>
 
-        <h3 class="text-3xl font-bold mt-6 mb-4">Comments</h3>
-        <div id="comments-container">
-            <!-- Komentar akan muncul di sini -->
+            <h3 class="text-3xl font-bold mt-6 mb-4">Comments</h3>
+            <div id="comments-container">
+                <!-- Komentar akan muncul di sini -->
+            </div>
         </div>
+    </section>
+
+
+
+    <div id="navigation">
+        <div class="nav-dot" data-scene="hero"></div>
+        <div class="nav-dot" data-scene="groom-info"></div>
+        <div class="nav-dot" data-scene="bride-info"></div>
+        <div class="nav-dot" data-scene="couple-info"></div>
+        <div class="nav-dot" data-scene="blessing"></div>
+        <div class="nav-dot" data-scene="gift-section"></div>
+        <div class="nav-dot active" data-scene="comment-section"></div>
     </div>
-</section>
-
-
-
-<div id="navigation">
-    <div class="nav-dot" data-scene="hero"></div>
-    <div class="nav-dot" data-scene="groom-info"></div>
-    <div class="nav-dot" data-scene="bride-info"></div>
-    <div class="nav-dot" data-scene="couple-info"></div>
-    <div class="nav-dot" data-scene="blessing"></div>
-    <div class="nav-dot" data-scene="gift-section"></div>
-    <div class="nav-dot active" data-scene="comment-section"></div>
-</div>
     <script>
         // Bank Information Details
         // Wedding Invitation Website - Comprehensive JavaScript
 
-            // Bank Details Configuration
-            const bankDetails = {
-                mandiri: {
-                    name: "Dana",
-                    details: "Account No: 085320602621\nA/N: Nisa Hamidah",
-                    qr: "./asset/dana2.jpg",
-                    account: "085320602621",
-                },
-                bni: {
-                    name: "Bank BRI",
-                    details: "Account No: 415601044867538\nA/N: Nisa Hamidah",
-                    qr: "./asset/dana2.jpg",
-                    account: "415601044867538",
-                },
-                jenius: {
-                    name: "BJB",
-                    details: "Account No: 0142039567100\nA/N: Asep Sahrul Maghfiroh",
-                    qr: "./asset/dana2.jpg",
-                    account: "0142039567100",
-                },
+        // Bank Details Configuration
+        const bankDetails = {
+            mandiri: {
+                name: "Dana",
+                details: "Account No: 085320602621\nA/N: Nisa Hamidah",
+                qr: "./asset/dana2.jpg",
+                account: "085320602621",
+            },
+            bni: {
+                name: "Bank BRI",
+                details: "Account No: 415601044867538\nA/N: Nisa Hamidah",
+                qr: "./asset/dana2.jpg",
+                account: "415601044867538",
+            },
+            jenius: {
+                name: "BJB",
+                details: "Account No: 0142039567100\nA/N: Asep Sahrul Maghfiroh",
+                qr: "./asset/dana2.jpg",
+                account: "0142039567100",
+            },
+        };
+
+        // Function to Show Bank Information
+        function showBankInfo(bank) {
+            const bankInfo = bankDetails[bank];
+            const bankNameEl = document.getElementById("bank-name");
+            const bankDetailsEl = document.getElementById("bank-details");
+            const bankQrEl = document.getElementById("bank-qr");
+            const qrCodeEl = document.getElementById("qr-code");
+            const copyTextEl = document.getElementById("copy-text");
+            const copyBtnEl = document.getElementById("copy-btn");
+
+            // Update bank name and details
+            bankNameEl.textContent = bankInfo.name;
+            bankDetailsEl.textContent = bankInfo.details;
+
+            // Show and set QR code
+            bankQrEl.classList.remove("hidden");
+            qrCodeEl.src = bankInfo.qr;
+
+            // Set copy text
+            copyTextEl.value = bankInfo.account;
+
+            // Copy account functionality
+            copyBtnEl.onclick = function () {
+                copyTextEl.select();
+                copyTextEl.setSelectionRange(0, 99999); // For mobile devices
+                navigator.clipboard.writeText(copyTextEl.value).then(() => {
+                    copyBtnEl.textContent = "Copied!";
+                    setTimeout(() => {
+                        copyBtnEl.textContent = "Copy Account";
+                    }, 2000);
+                });
             };
+        }
 
-            // Function to Show Bank Information
-            function showBankInfo(bank) {
-                const bankInfo = bankDetails[bank];
-                const bankNameEl = document.getElementById("bank-name");
-                const bankDetailsEl = document.getElementById("bank-details");
-                const bankQrEl = document.getElementById("bank-qr");
-                const qrCodeEl = document.getElementById("qr-code");
-                const copyTextEl = document.getElementById("copy-text");
-                const copyBtnEl = document.getElementById("copy-btn");
+        // Countdown Timer Function
+        function updateCountdown() {
+            const weddingDate = new Date("January 25, 2025 08:30:00").getTime();
+            const now = new Date().getTime();
+            const timeRemaining = weddingDate - now;
 
-                // Update bank name and details
-                bankNameEl.textContent = bankInfo.name;
-                bankDetailsEl.textContent = bankInfo.details;
+            const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+            const hours = Math.floor(
+                (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+            );
+            const minutes = Math.floor(
+                (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
+            );
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-                // Show and set QR code
-                bankQrEl.classList.remove("hidden");
-                qrCodeEl.src = bankInfo.qr;
+            // Update countdown elements
+            document.getElementById("days").textContent = days
+                .toString()
+                .padStart(2, "0");
+            document.getElementById("hours").textContent = hours
+                .toString()
+                .padStart(2, "0");
+            document.getElementById("minutes").textContent = minutes
+                .toString()
+                .padStart(2, "0");
+            document.getElementById("seconds").textContent = seconds
+                .toString()
+                .padStart(2, "0");
 
-                // Set copy text
-                copyTextEl.value = bankInfo.account;
-
-                // Copy account functionality
-                copyBtnEl.onclick = function () {
-                    copyTextEl.select();
-                    copyTextEl.setSelectionRange(0, 99999); // For mobile devices
-                    navigator.clipboard.writeText(copyTextEl.value).then(() => {
-                        copyBtnEl.textContent = "Copied!";
-                        setTimeout(() => {
-                            copyBtnEl.textContent = "Copy Account";
-                        }, 2000);
-                    });
-                };
-            }
-
-            // Countdown Timer Function
-            function updateCountdown() {
-                const weddingDate = new Date("January 25, 2025 08:30:00").getTime();
-                const now = new Date().getTime();
-                const timeRemaining = weddingDate - now;
-
-                const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-                const hours = Math.floor(
-                    (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-                );
-                const minutes = Math.floor(
-                    (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
-                );
-                const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-                // Update countdown elements
-                document.getElementById("days").textContent = days
-                    .toString()
-                    .padStart(2, "0");
-                document.getElementById("hours").textContent = hours
-                    .toString()
-                    .padStart(2, "0");
-                document.getElementById("minutes").textContent = minutes
-                    .toString()
-                    .padStart(2, "0");
-                document.getElementById("seconds").textContent = seconds
-                    .toString()
-                    .padStart(2, "0");
-
-                // Optional: Add a special effect when countdown reaches zero
-                if (timeRemaining < 0) {
-                    clearInterval(countdownInterval);
-                    const countdownElements =
-                        document.querySelectorAll(".countdown-value");
-                    countdownElements.forEach((el) => {
-                        el.textContent = "00";
-                        el.classList.add("animate-pulse");
-                    });
-                }
-            }
-
-            // Enhanced Scene Navigation with Manual Override
-            let currentSceneIndex = 0;
-            const scenes = document.querySelectorAll(".scene");
-            const totalScenes = scenes.length;
-
-            // Navigation state management
-            let autoScrollEnabled = true;
-            let userInteractedManually = false;
-            let autoScrollTimeout;
-            let countdownInterval;
-            let slideInterval;
-
-            // Function to reset auto-scroll state after manual interaction
-            function resetAutoScrollState() {
-                userInteractedManually = true;
-
-                // Clear any existing timeouts and intervals
-                clearTimeout(autoScrollTimeout);
-                clearInterval(slideInterval);
-
-                // Re-enable auto-scroll after a delay
-                autoScrollTimeout = setTimeout(() => {
-                    userInteractedManually = false;
-                    // Restart auto-scroll
-                    startAutoScroll();
-                }, 10000); // 10 seconds of manual control
-            }
-
-            // Function to show a specific scene
-            function showScene(sceneIndex) {
-                // Ensure valid scene index
-                sceneIndex = Math.max(0, Math.min(sceneIndex, totalScenes - 1));
-
-                // Remove active class from all scenes
-                scenes.forEach((scene) => scene.classList.remove("scene-active"));
-
-                // Add active class to target scene
-                scenes[sceneIndex].classList.add("scene-active");
-
-                // Update navigation dots
-                updateNavigationDots(scenes[sceneIndex].id);
-
-                // Update current scene index
-                currentSceneIndex = sceneIndex;
-
-                // Trigger manual interaction handling
-                resetAutoScrollState();
-            }
-
-            // Modified navigation dot initialization
-            function initSceneNavigation() {
-                const navDots = document.querySelectorAll(".nav-dot");
-
-                navDots.forEach((dot, index) => {
-                    dot.addEventListener("click", () => {
-                        // Get the target scene
-                        const targetSceneId = dot.getAttribute("data-scene");
-                        const targetScene = document.getElementById(targetSceneId);
-                        const targetSceneIndex = Array.from(scenes).indexOf(targetScene);
-
-                        // Show the selected scene
-                        showScene(targetSceneIndex);
-                    });
+            // Optional: Add a special effect when countdown reaches zero
+            if (timeRemaining < 0) {
+                clearInterval(countdownInterval);
+                const countdownElements =
+                    document.querySelectorAll(".countdown-value");
+                countdownElements.forEach((el) => {
+                    el.textContent = "00";
+                    el.classList.add("animate-pulse");
                 });
             }
+        }
 
-            // Function to automatically progress to next scene
-            function showNextScene() {
-                // Only auto-scroll if not manually interacted with
-                if (!userInteractedManually) {
-                    // Increment scene index
-                    let nextSceneIndex = currentSceneIndex + 1;
+        // Enhanced Scene Navigation with Manual Override
+        let currentSceneIndex = 0;
+        const scenes = document.querySelectorAll(".scene");
+        const totalScenes = scenes.length;
 
-                    // If at last scene, stop auto-scrolling
-                    if (nextSceneIndex >= totalScenes) {
-                        clearInterval(slideInterval);
-                        return;
-                    }
+        // Navigation state management
+        let autoScrollEnabled = true;
+        let userInteractedManually = false;
+        let autoScrollTimeout;
+        let countdownInterval;
+        let slideInterval;
 
-                    // Show next scene
-                    showScene(nextSceneIndex);
-                }
-            }
+        // Function to reset auto-scroll state after manual interaction
+        function resetAutoScrollState() {
+            userInteractedManually = true;
 
-            // Function to start auto-scrolling
-            function startAutoScroll() {
-                // Clear any existing interval first
-                clearInterval(slideInterval);
+            // Clear any existing timeouts and intervals
+            clearTimeout(autoScrollTimeout);
+            clearInterval(slideInterval);
 
-                // Start new auto-scroll interval
-                slideInterval = setInterval(showNextScene, 4000);
-            }
-
-            // Parallax Effect for Parallax Texts
-            function initParallaxEffect() {
-                const parallaxTexts = document.querySelectorAll(".parallax-text");
-
-                window.addEventListener("mousemove", (e) => {
-                    const { clientX, clientY } = e;
-
-                    parallaxTexts.forEach((text) => {
-                        const speed = parseFloat(text.getAttribute("data-speed") || "0.05");
-                        const x = clientX * speed;
-                        const y = clientY * speed;
-
-                        text.style.transform = `translate(${x}px, ${y}px)`;
-                    });
-                });
-            }
-
-            // Glitch Text Animation
-            function initGlitchText() {
-                const glitchTexts = document.querySelectorAll(".glitch-text");
-
-                glitchTexts.forEach((text) => {
-                    text.addEventListener("mouseenter", () => {
-                        text.style.animation = "glitch 0.5s infinite";
-                    });
-
-                    text.addEventListener("mouseleave", () => {
-                        text.style.animation = "none";
-                    });
-                });
-            }
-
-            // Cinematric Button Transitions
-            function initSceneTransitions() {
-                const buttons = document.querySelectorAll(".cinematic-button");
-
-                buttons.forEach((button) => {
-                    button.addEventListener("click", () => {
-                        if (button.closest("#hero")) {
-                            // From Hero to Couple Info
-                            const coupleInfoScene = document.getElementById("couple-info");
-                            const coupleInfoIndex = Array.from(scenes).indexOf(coupleInfoScene);
-                            showScene(coupleInfoIndex);
-                        } else if (button.closest("#couple-info")) {
-                            // From Couple Info to Gift Section
-                            const giftSectionScene = document.getElementById("gift-section");
-                            const giftSectionIndex = Array.from(scenes).indexOf(giftSectionScene);
-                            showScene(giftSectionIndex);
-                        }
-                    });
-                });
-            }
-
-            // Update Navigation Dots
-            function updateNavigationDots(activeSceneId) {
-                const navDots = document.querySelectorAll(".nav-dot");
-
-                navDots.forEach((dot) => {
-                    dot.classList.remove("active");
-                    if (dot.getAttribute("data-scene") === activeSceneId) {
-                        dot.classList.add("active");
-                    }
-                });
-            }
-
-            // Initialize Location Details Modal
-            function initLocationModal() {
-                const locationButton = document.querySelector("#couple-info button");
-
-                locationButton.addEventListener("click", (event) => {
-                    event.preventDefault(); // Prevent default action
-                    const locationUrl = "https://maps.app.goo.gl/2DXSoUwpe9uPnA6VA"; // New URL for Masjid Alhidayah
-                    window.open(locationUrl, "_blank"); // Open Google Maps in a new tab
-                });
-            }
-
-            // Main Initialization Function
-            function init() {
-                // Start countdown
-                updateCountdown();
-                countdownInterval = setInterval(updateCountdown, 1000);
-
-                // Initialize navigation and effects
-                initSceneNavigation();
-                initParallaxEffect();
-                initGlitchText();
-                initSceneTransitions();
-                initLocationModal();
-
-                // Initialize auto-scroll
+            // Re-enable auto-scroll after a delay
+            autoScrollTimeout = setTimeout(() => {
+                userInteractedManually = false;
+                // Restart auto-scroll
                 startAutoScroll();
+            }, 10000); // 10 seconds of manual control
+        }
 
-                // Add some initial animations
-                setTimeout(() => {
-                    const heroContent = document.querySelector("#hero .scene-content");
-                    heroContent.classList.add("animate-fade-in");
-                }, 500);
+        // Function to show a specific scene
+        function showScene(sceneIndex) {
+            // Ensure valid scene index
+            sceneIndex = Math.max(0, Math.min(sceneIndex, totalScenes - 1));
 
-                // Add interaction reset for scroll and touch events
-                ['scroll', 'touchmove'].forEach(eventType => {
-                    window.addEventListener(eventType, () => {
-                        resetAutoScrollState();
-                    });
+            // Remove active class from all scenes
+            scenes.forEach((scene) => scene.classList.remove("scene-active"));
+
+            // Add active class to target scene
+            scenes[sceneIndex].classList.add("scene-active");
+
+            // Update navigation dots
+            updateNavigationDots(scenes[sceneIndex].id);
+
+            // Update current scene index
+            currentSceneIndex = sceneIndex;
+
+            // Trigger manual interaction handling
+            resetAutoScrollState();
+        }
+
+        // Modified navigation dot initialization
+        function initSceneNavigation() {
+            const navDots = document.querySelectorAll(".nav-dot");
+
+            navDots.forEach((dot, index) => {
+                dot.addEventListener("click", () => {
+                    // Get the target scene
+                    const targetSceneId = dot.getAttribute("data-scene");
+                    const targetScene = document.getElementById(targetSceneId);
+                    const targetSceneIndex = Array.from(scenes).indexOf(targetScene);
+
+                    // Show the selected scene
+                    showScene(targetSceneIndex);
                 });
-            }
+            });
+        }
 
-            // Additional Style Enhancements
-            const styleEnhancements = `
+        // Function to automatically progress to next scene
+        function showNextScene() {
+            // Only auto-scroll if not manually interacted with
+            if (!userInteractedManually) {
+                // Increment scene index
+                let nextSceneIndex = currentSceneIndex + 1;
+
+                // If at last scene, stop auto-scrolling
+                if (nextSceneIndex >= totalScenes) {
+                    clearInterval(slideInterval);
+                    return;
+                }
+
+                // Show next scene
+                showScene(nextSceneIndex);
+            }
+        }
+
+        // Function to start auto-scrolling
+        function startAutoScroll() {
+            // Clear any existing interval first
+            clearInterval(slideInterval);
+
+            // Start new auto-scroll interval
+            slideInterval = setInterval(showNextScene, 4000);
+        }
+
+        // Parallax Effect for Parallax Texts
+        function initParallaxEffect() {
+            const parallaxTexts = document.querySelectorAll(".parallax-text");
+
+            window.addEventListener("mousemove", (e) => {
+                const { clientX, clientY } = e;
+
+                parallaxTexts.forEach((text) => {
+                    const speed = parseFloat(text.getAttribute("data-speed") || "0.05");
+                    const x = clientX * speed;
+                    const y = clientY * speed;
+
+                    text.style.transform = `translate(${x}px, ${y}px)`;
+                });
+            });
+        }
+
+        // Glitch Text Animation
+        function initGlitchText() {
+            const glitchTexts = document.querySelectorAll(".glitch-text");
+
+            glitchTexts.forEach((text) => {
+                text.addEventListener("mouseenter", () => {
+                    text.style.animation = "glitch 0.5s infinite";
+                });
+
+                text.addEventListener("mouseleave", () => {
+                    text.style.animation = "none";
+                });
+            });
+        }
+
+        // Cinematric Button Transitions
+        function initSceneTransitions() {
+            const buttons = document.querySelectorAll(".cinematic-button");
+
+            buttons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    if (button.closest("#hero")) {
+                        // From Hero to Couple Info
+                        const coupleInfoScene = document.getElementById("couple-info");
+                        const coupleInfoIndex = Array.from(scenes).indexOf(coupleInfoScene);
+                        showScene(coupleInfoIndex);
+                    } else if (button.closest("#couple-info")) {
+                        // From Couple Info to Gift Section
+                        const giftSectionScene = document.getElementById("gift-section");
+                        const giftSectionIndex = Array.from(scenes).indexOf(giftSectionScene);
+                        showScene(giftSectionIndex);
+                    }
+                });
+            });
+        }
+
+        // Update Navigation Dots
+        function updateNavigationDots(activeSceneId) {
+            const navDots = document.querySelectorAll(".nav-dot");
+
+            navDots.forEach((dot) => {
+                dot.classList.remove("active");
+                if (dot.getAttribute("data-scene") === activeSceneId) {
+                    dot.classList.add("active");
+                }
+            });
+        }
+
+        // Initialize Location Details Modal
+        function initLocationModal() {
+            const locationButton = document.querySelector("#couple-info button");
+
+            locationButton.addEventListener("click", (event) => {
+                event.preventDefault(); // Prevent default action
+                const locationUrl = "https://maps.app.goo.gl/2DXSoUwpe9uPnA6VA"; // New URL for Masjid Alhidayah
+                window.open(locationUrl, "_blank"); // Open Google Maps in a new tab
+            });
+        }
+
+        // Main Initialization Function
+        function init() {
+            // Start countdown
+            updateCountdown();
+            countdownInterval = setInterval(updateCountdown, 1000);
+
+            // Initialize navigation and effects
+            initSceneNavigation();
+            initParallaxEffect();
+            initGlitchText();
+            initSceneTransitions();
+            initLocationModal();
+
+            // Initialize auto-scroll
+            startAutoScroll();
+
+            // Add some initial animations
+            setTimeout(() => {
+                const heroContent = document.querySelector("#hero .scene-content");
+                heroContent.classList.add("animate-fade-in");
+            }, 500);
+
+            // Add interaction reset for scroll and touch events
+            ['scroll', 'touchmove'].forEach(eventType => {
+                window.addEventListener(eventType, () => {
+                    resetAutoScrollState();
+                });
+            });
+        }
+
+        // Additional Style Enhancements
+        const styleEnhancements = `
 @keyframes animate-fade-in {
     from { opacity: 0; transform: translateY(50px); }
     to { opacity: 1; transform: translateY(0); }
@@ -1137,71 +1158,156 @@
 }
 `;
 
-            // Inject additional styles
-            const styleTag = document.createElement("style");
-            styleTag.textContent = styleEnhancements;
-            document.head.appendChild(styleTag);
+        // Inject additional styles
+        const styleTag = document.createElement("style");
+        styleTag.textContent = styleEnhancements;
+        document.head.appendChild(styleTag);
 
-            // Run initialization when DOM is fully loaded
-            document.addEventListener("DOMContentLoaded", init);
+        // Run initialization when DOM is fully loaded
+        document.addEventListener("DOMContentLoaded", init);
 
 
-   async function loadComments() {
-        try {
-            const response = await fetch('http://localhost:5000/comments');
-            const comments = await response.json();
+        // Firebase Configuration
+        // Firebase Configuration
+       // Firebase Configuration and Comments Management
 
-            const commentsContainer = document.getElementById('comments-container');
+     // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDZ4lngrcbU3KisAEY3smyy_q-xC1ozA4s",
+            authDomain: "nisa-sahrul-wedding.firebaseapp.com",
+            databaseURL: "https://nisa-sahrul-wedding.firebaseio.com",
+            projectId: "nisa-sahrul-wedding",
+            storageBucket: "nisa-sahrul-wedding.appspot.com",
+            messagingSenderId: "22988452108",
+            appId: "1:22988452108:web:b3309bf8c0ea5480189929",
+            measurementId: "G-N4103431R9"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database(app);
+
+        // DOM Elements
+        const form = document.getElementById('comment-form');
+        const nameInput = document.getElementById('name');
+        const messageInput = document.getElementById('message');
+        const commentsContainer = document.getElementById('comments-container');
+
+        // Function to clear existing comments in UI
+        function clearComments() {
             commentsContainer.innerHTML = '';
-
-            if (comments.length === 0) {
-                commentsContainer.innerHTML = '<p>No comments yet!</p>';
-            } else {
-                comments.forEach((comment) => {
-                    const commentElement = document.createElement('div');
-                    commentElement.classList.add('bg-white', 'p-4', 'rounded-lg', 'shadow-md', 'border', 'border-gray-200');
-                    commentElement.innerHTML = `
-                            <div class="flex justify-between items-center mb-2">
-                                <p class="font-bold text-gray-800">${comment.name}</p>
-                                <small class="text-gray-500 text-sm">${new Date(comment.date).toLocaleString()}</small>
-                            </div>
-                            <p class="text-gray-700">${comment.message}</p>
-                            <button onclick="deleteComment('${comment.id}')" class="text-red-500 mt-2">Delete</button>
-                        `;
-                    commentsContainer.appendChild(commentElement);
-                });
-            }
-        } catch (error) {
-            console.error('Error loading comments:', error);
         }
-    }
 
-    // Fungsi untuk menghapus komentar berdasarkan ID
-    async function deleteComment(commentId) {
-        try {
-            console.log('Deleting comment with ID:', commentId); // Debugging
+        // Function to add comment to Firebase
+        function addComment(e) {
+            e.preventDefault(); // Prevent page refresh
 
-            const response = await fetch(`http://localhost:5000/comments/${commentId}`, {
-                method: 'DELETE',
+            // Get input values
+            const name = nameInput.value.trim();
+            const message = messageInput.value.trim();
+
+            // Validate inputs
+            if (!name || !message) {
+                alert('Nama dan pesan harus diisi!');
+                return;
+            }
+
+            // Create comment object
+            const commentData = {
+                name: name,
+                message: message,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            };
+
+            // Save comment to Firebase Realtime Database
+            const commentRef = database.ref('comments').push();
+            commentRef.set(commentData)
+                .then(() => {
+                    nameInput.value = '';  // Clear the input fields after submission
+                    messageInput.value = '';
+                })
+                .catch((error) => {
+                    console.error('Error adding comment:', error);
+                    alert('Gagal mengirim komentar, silakan coba lagi.');
+                });
+        }
+
+        // Function to render comments
+        function renderComments(snapshot) {
+            const comment = snapshot.val();
+            const commentElement = document.createElement('div');
+            commentElement.classList.add('comment');
+            commentElement.setAttribute('data-comment-id', snapshot.key);
+
+            // Format timestamp
+            const formattedDate = new Date(comment.timestamp).toLocaleString('id-ID', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
             });
 
-            if (response.ok) {
-                console.log('Comment deleted successfully');
-                loadComments(); // Reload comments setelah menghapus
-            } else {
-                console.error('Failed to delete comment:', response.statusText);
-                alert('Failed to delete comment.');
-            }
-        } catch (error) {
-            console.error('Error deleting comment:', error);
-            alert('An error occurred. Please try again.');
+            // Display comment data
+            commentElement.innerHTML = `
+        <p>
+            <strong>${comment.name}</strong> 
+            <small>${formattedDate}</small>
+        </p>
+        <p>${comment.message}</p>
+        <button onclick="deleteComment('${snapshot.key}')">Hapus</button>
+    `;
+            commentsContainer.prepend(commentElement); // Add new comments at the top
         }
-    }
 
-    // Load comments saat halaman dimuat
-    window.onload = loadComments;
-       
+        // Function to delete comment
+        function deleteComment(commentId) {
+            const commentRef = database.ref('comments/' + commentId);
+            commentRef.remove()
+                .then(() => {
+                    alert('Komentar berhasil dihapus');
+                })
+                .catch((error) => {
+                    console.error('Error deleting comment:', error);
+                    alert('Gagal menghapus komentar');
+                });
+        }
+
+        // Listen for new comments in real-time
+        function setupCommentListener() {
+            const commentsRef = database.ref('comments').orderByChild('timestamp');
+
+            // Clear existing comments first
+            clearComments();
+
+            // Fetch all existing comments
+            commentsRef.once('value', (snapshot) => {
+                snapshot.forEach((childSnapshot) => {
+                    renderComments(childSnapshot);
+                });
+            });
+
+            // Listen for new comments in real-time
+            commentsRef.on('child_added', (snapshot) => {
+                renderComments(snapshot);
+            });
+
+            // Listen for removed comments to update UI
+            commentsRef.on('child_removed', (snapshot) => {
+                const commentElement = document.querySelector(`[data-comment-id="${snapshot.key}"]`);
+                if (commentElement) {
+                    commentElement.remove();
+                }
+            });
+        }
+
+        // Set up form submission and comment listener
+        form.addEventListener('submit', addComment);
+        setupCommentListener();
+
+
     </script>
+
 </body>
 
 </html>
