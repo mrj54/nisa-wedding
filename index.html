@@ -837,6 +837,11 @@
     <div class="nav-dot active" data-scene="comment-section"></div>
   </div>
 
+  <audio id="myAudio" autoplay>
+    <source src="./audio/Payung Teduh - Akad (Official Music Video).mp3" type="audio/mpeg">
+    <source src="./audio/Payung Teduh - Akad (Official Music Video).mp3" type="audio/ogg">
+    Your browser does not support the audio element.
+  </audio>
   <script>
     const bankDetails = {
       mandiri: {
@@ -1241,6 +1246,13 @@
 
     // Initial Load
     loadComments();
+
+  const audio = document.getElementById('myAudio');
+  audio.play().catch(error => {
+    document.addEventListener('click', () => {
+      audio.play();
+    });
+  });
 
   </script>
 
