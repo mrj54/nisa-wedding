@@ -407,7 +407,7 @@
       /* Memusatkan gambar */
     }
 
-    #comment-section {}
+ 
 
     #comment-section .scene-background {
       background-image: url("../asset/bc8.jpeg");
@@ -415,6 +415,14 @@
       /* Menutupi seluruh area */
       background-position: center;
       /* Memusatkan gambar */
+      height: 1000px;
+    }
+
+  
+    #clossing-section .scene-background{
+      background-image: url("../asset/bc8.jpeg");
+      background-size: cover;
+      background-position: center;
       height: 1000px;
     }
 
@@ -452,7 +460,7 @@
     .glitch-text {
       position: relative;
       display: inline-block;
-      animation: glitch 1s infinite;
+      animation: glitch 5s infinite;
     }
 
     @keyframes glitch {
@@ -822,7 +830,7 @@
         </button>
       </form>
 
-      <h3 class="text-3xl font-bold mt-6 mb-4">Comments</h3>
+      <h3 class="text-3xl font-bold mt-6 mb-4 title">ucapan</h3>
       <div id="comments-container">
         <!-- Komentar akan muncul di sini -->
       </div>
@@ -832,8 +840,8 @@
   <section id="clossing-section" class="scene">
     <div class="scene-content">
       <div class="scene-bacground"></div>
-      <h2 class="text-4xl font-bold mb-8">Doa dan Harapan</h2>
-      <blockquote class="text-2xl italic mb-6">
+      <h2 class="text-4xl font-bold mb-8 title">Doa dan Harapan</h2>
+      <blockquote class="text-xl italic mb-6">
         Dengan penuh rasa syukur, kami memohon doa dan restu dari keluarga,
         sahabat, dan seluruh hadirin. Semoga pernikahan kami menjadi awal
         dari perjalanan panjang penuh cinta, kebahagiaan, dan keberkahan.
@@ -852,7 +860,7 @@
     <div class="nav-dot" data-scene="blessing"></div>
     <div class="nav-dot" data-scene="gift-section"></div>
     <div class="nav-dot active" data-scene="comment-section"></div>
-  </div>
+
   <div class="nav-dot" data-scene="clossing-section"></div>
 
   <audio id="myAudio" autoplay>
