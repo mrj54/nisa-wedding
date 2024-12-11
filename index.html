@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -406,8 +407,8 @@
       /* Memusatkan gambar */
     }
 
-    #comment-section {
-    }
+    #comment-section {}
+
     #comment-section .scene-background {
       background-image: url("../asset/bc8.jpeg");
       background-size: cover;
@@ -754,7 +755,7 @@
   <section id="blessing" class="scene">
     <div class="scene-background"></div>
     <div class="scene-content">
-      <h2 class="text-4xl font-bold mb-8">Doa dan Harapan</h2>
+      <h2 class="text-4xl font-bold mb-8 title">Doa dan Harapan</h2>
       <blockquote class="text-2xl italic mb-6">
         "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan
         pasangan-pasangan untukmu dari jenismu sendiri, supaya kamu mendapat
@@ -806,15 +807,18 @@
 
   <section id="comment-section" class="scene">
     <div class="scene-background"></div>
-
     <div class="scene-content">
-      <h2 class="text-4xl font-bold mb-8">Leave a Comment</h2>
+      <h2 class="text-4xl font-bold mb-8 title">RSVP</h2>
       <form id="comment-form">
         <input type="text" id="name" placeholder="Your Name" required class="w-full px-4 py-2 mb-4 border rounded-md">
         <textarea id="message" placeholder="Your Message" required
           class="w-full px-4 py-2 mb-4 border rounded-md"></textarea>
+        <select id="attendance-status" required class="w-full px-4 py-2 mb-4 border rounded-md">
+          <option value="Hadir">Hadir</option>
+          <option value="Tidak Hadir">Tidak Hadir</option>
+        </select>
         <button type="submit" class="cinematic-button px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700">
-          Post Comment
+          KIRIM PESAN
         </button>
       </form>
 
@@ -825,6 +829,19 @@
     </div>
   </section>
 
+  <section id="clossing-section" class="scene">
+    <div class="scene-content">
+      <div class="scene-bacground"></div>
+      <h2 class="text-4xl font-bold mb-8">Doa dan Harapan</h2>
+      <blockquote class="text-2xl italic mb-6">
+        Dengan penuh rasa syukur, kami memohon doa dan restu dari keluarga,
+        sahabat, dan seluruh hadirin. Semoga pernikahan kami menjadi awal
+        dari perjalanan panjang penuh cinta, kebahagiaan, dan keberkahan.
+      </blockquote>
+    </div>
+    </div>
+    </div>
+  </section>
 
 
   <div id="navigation">
@@ -836,6 +853,7 @@
     <div class="nav-dot" data-scene="gift-section"></div>
     <div class="nav-dot active" data-scene="comment-section"></div>
   </div>
+  <div class="nav-dot" data-scene="clossing-section"></div>
 
   <audio id="myAudio" autoplay>
     <source src="./audio/Payung Teduh - Akad (Official Music Video).mp3" type="audio/mpeg">
@@ -1167,9 +1185,8 @@
     // Run initialization when DOM is fully loaded
     document.addEventListener("DOMContentLoaded", init);
 
-    // Firebase Configuration
-    // Firebase configuration
-   // Firebase Configuration
+
+    // Konfigurasi Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyDZ4lngrcbU3KisAEY3smyy_q-xC1ozA4s",
       authDomain: "nisa-sahrul-wedding.firebaseapp.com",
@@ -1180,79 +1197,81 @@
       measurementId: "G-N4103431R9"
     };
 
-    // Initialize Firebase
+    // Inisialisasi Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
+    const commentsRef = db.collection('comments');
 
     // DOM Elements
     const commentForm = document.getElementById('comment-form');
     const nameInput = document.getElementById('name');
     const messageInput = document.getElementById('message');
+    const attendanceStatusSelect = document.getElementById('attendance-status');
     const commentsContainer = document.getElementById('comments-container');
 
-    // Submit Comment
+    // Fungsi Menambahkan Komentar
     commentForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const name = nameInput.value.trim();
-      const message = messageInput.value.trim();
-
-      if (!name || !message) {
-        alert('Name and Message are required!');
-        return;
-      }
+      e.preventDefault(); // Mencegah halaman reload
 
       try {
-        // Add new comment to Firestore
-        await db.collection('comments').add({
-          name: name,
-          message: message,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        // Tambahkan komentar ke Firestore
+        await commentsRef.add({
+          name: nameInput.value.trim(),  // Nama tamu
+          comment: messageInput.value.trim(),  // Isi komentar
+          status: attendanceStatusSelect.value,  // Status kehadiran
+          timestamp: firebase.firestore.FieldValue.serverTimestamp() // Waktu server
         });
 
+        // Reset input form
         nameInput.value = '';
         messageInput.value = '';
-        alert('Comment submitted!');
-        loadComments(); // Refresh comments
+        attendanceStatusSelect.value = 'Hadir'; // Default status
+
+        // Refresh daftar komentar
+        loadComments();
       } catch (error) {
-        console.error("Error submitting comment: ", error);
-        alert('Failed to submit comment. Please try again.');
+        console.error("Gagal menambahkan komentar: ", error);
+        alert('Gagal mengirim komentar. Silakan coba lagi.');
       }
     });
 
-    // Load Comments
+    // Fungsi Memuat Komentar
     async function loadComments() {
-      commentsContainer.innerHTML = ''; // Clear current comments
       try {
-        const snapshot = await db.collection('comments')
-          .orderBy('timestamp', 'desc')
-          .get();
+        commentsContainer.innerHTML = ''; // Bersihkan kontainer komentar
 
-        snapshot.forEach((doc) => {
-          const data = doc.data();
+        // Ambil data komentar dari Firestore, urutkan berdasarkan waktu
+        const snapshot = await commentsRef.orderBy('timestamp', 'desc').get();
+
+        snapshot.forEach(doc => {
+          const commentData = doc.data();
           const commentEl = document.createElement('div');
-          commentEl.classList.add('comment', 'mb-4', 'p-4', 'border', 'rounded-md');
+          commentEl.classList.add('comment');
+
+          // Format waktu (timestamp)
+          const timestamp = commentData.timestamp
+            ? new Date(commentData.timestamp.seconds * 1000).toLocaleString()
+            : 'Baru saja';
+
+          // Tanda kehadiran (centang atau silang)
+          const attendanceIcon = commentData.status === 'Hadir' ? '✅' : '❌';
+
+          // Isi elemen komentar
           commentEl.innerHTML = `
-        <strong>${data.name}</strong>
-        <p>${data.message}</p>
-        <small>${data.timestamp?.toDate().toLocaleString() || 'Just now'}</small>
+        <strong>${commentData.name} ${attendanceIcon}</strong>
+        <p>${commentData.comment}</p>
+        <small>Dikirim pada: ${timestamp}</small>
       `;
-          commentsContainer.appendChild(commentEl);
+
+          commentsContainer.appendChild(commentEl); // Tambahkan komentar ke kontainer
         });
       } catch (error) {
-        console.error("Error loading comments: ", error);
+        console.error("Gagal memuat komentar: ", error);
       }
     }
 
-    // Initial Load
+    // Memuat komentar saat halaman dimuat
     loadComments();
-
-  const audio = document.getElementById('myAudio');
-  audio.play().catch(error => {
-    document.addEventListener('click', () => {
-      audio.play();
-    });
-  });
 
   </script>
 
