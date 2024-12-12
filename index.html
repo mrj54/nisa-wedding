@@ -348,7 +348,7 @@
       height: 100%;
       background-size: cover;
       background-position: center;
-      filter: brightness(0.7);
+      filter: brightness(1);
       z-index: -1;
       transition: transform 2s ease;
     }
@@ -1286,6 +1286,12 @@
     // Memuat komentar saat halaman dimuat
     loadComments();
 
+      const audio = document.getElementById('myAudio');
+        audio.play().catch(error => {
+          document.addEventListener('click', () => {
+            audio.play();
+          });
+        });
   </script>
 
 </body>
