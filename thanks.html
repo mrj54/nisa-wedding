@@ -1,180 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doa dan Harapan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap');
 
-    <style>
-        /* From Uiverse.io by catraco */ 
-.card {
-  --card-color: #0080ff;
-  --blub-color: #52d4eb;
-  position: relative;
-  user-select: none;
-}
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background: linear-gradient(135deg, #f0f4f0 0%, #e6efe6 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 10vh;
+      perspective: 1000px;
+    }
 
-@keyframes keyframes-rotate-blubs {
-  0% {
-    transform: translate(10px) rotate(360deg);
-  }
+    .closing-container {
+      max-width: 90%;
+      width: 350px;
+      padding: 30px;
+      background-color: rgba(255, 255, 255, 0.85);
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      transform: translateZ(50px) rotateX(2deg);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(20, 83, 45, 0.1);
+      margin-bottom: 20px;
+    }
 
-  50% {
-    transform: translate(-5px, 10px) rotate(180deg);
-  }
+    .closing-container:hover {
+      transform: translateZ(60px) rotateX(0deg);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
 
-  100% {
-    transform: translate(10px) rotate(0deg);
-  }
-}
+    .title {
+      position: relative;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #145350;
+    }
 
-.card span {
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  background: linear-gradient(0deg, transparent, var(--blub-color));
-  border-radius: 100%;
-  opacity: 0.5;
-  animation: keyframes-rotate-blubs 4s infinite linear;
-}
+    .title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 2px;
+      background-color: #145350;
+      opacity: 0.5;
+    }
 
-.card span:nth-child(1) {
-  top: -5%;
-  left: -5%;
-  width: 60px;
-  height: 60px;
-  animation-delay: .1s;
-  opacity: 0.3;
-}
+    .text-content {
+      text-align: center;
+      line-height: 1.6;
+      color: #145d50;
+    }
 
-.card span:nth-child(2) {
-  top: 60%;
-  left: -20%;
-  width: 80px;
-  height: 80px;
-  animation-delay: .2s;
-  opacity: 0.3;
-}
+    .placeholder-image {
+      width: 300px;
+      height: 200px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
 
-.card span:nth-child(3) {
-  top: 10%;
-  left: 60%;
-  animation-delay: .3s;
-  opacity: 0.6;
-}
-
-.card span:nth-child(4) {
-  top: 70%;
-  left: 50%;
-  width: 90px;
-  height: 90px;
-  animation-delay: .4s;
-  opacity: 0.4;
-}
-
-.card div {
-  backdrop-filter: blur(15px);
-  outline: 1px solid var(--card-color);
-  color: var(--card-color);
-  width: 180px;
-  height: 250px;
-  border-radius: 5%;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.card div .check {
-  fill: var(--card-color);
-  width: 25px;
-  height: 25px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translate(50%, -50%);
-}
-
-.card div strong {
-  font-size: 1rem;
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-.card div p {
-  font-size: 0.8rem;
-}
-
-.card div hr {
-  border: none;
-  border-top: 1px solid var(--card-color);
-  opacity: .5;
-}
-
-.card div button {
-  background-color: transparent;
-  color: var(--card-color);
-  border: none;
-  outline: 1px solid var(--card-color);
-  border-radius: 1rem;
-  padding: .5rem 1rem;
-  font-size: 0.8rem;
-  font-weight: 900;
-  transition: .3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-transform: uppercase;
-  gap: .2em;
-}
-
-.card div button .arrow {
-  width: 0px;
-  height: 20px;
-  fill: var(--blub-color);
-  transform: scale(0);
-  transition: .3s;
-}
-
-.card div button:hover .arrow {
-  width: 20px;
-  margin-left: 1em;
-  transform: scale(1);
-}
-
-.card div button:hover {
-  background-color: var(--card-color);
-  color: var(--blub-color);
-  cursor: pointer;
-}
-    </style>
+    @media (max-width: 380px) {
+      .closing-container {
+        width: 95%;
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    
-    <div class="card">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <div>
-            <svg class="check" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-    
-                <path
-                    d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z">
-                </path>
-            </svg>
-            <strong>thank you</strong>
-            <p>Using Lorem ipsum to focus attention on graphic elements in a webpage design proposal · </p>
-            <hr>
-            <button>
-               kembali
-                <svg class="arrow" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                    <path
-                        d="M470.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 256 265.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160zm-352 160l160-160c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L210.7 256 73.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z">
-                    </path>
-                </svg>
-            </button>
-        </div>
+  <section class="closing-container">
+    <h2 class="text-3xl font-bold mb-6 title">Doa dan Harapan</h2>
+    <div class="text-xl italic text-content">
+      Dengan penuh rasa syukur, kami memohon doa dan restu dari keluarga,
+      sahabat, dan seluruh hadirin. Semoga pernikahan kami menjadi awal
+      dari perjalanan panjang penuh cinta, kebahagiaan, dan keberkahan.
     </div>
+  </section>
+
+  <img src="/api/placeholder/300/200" alt="Placeholder Foto Pasangan" class="placeholder-image">
 </body>
+
 </html>

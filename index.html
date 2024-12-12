@@ -179,6 +179,17 @@
       /* Efek transisi */
     }
 
+     .closing-bg {
+            background: linear-gradient(135deg, rgba(20, 83, 45, 0.1) 0%, rgba(20, 83, 45, 0.3) 100%);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .closing-border {
+            border-left: 5px solid #064E3B;
+            padding-left: 20px;
+        }
+        .title-shadow {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
     .cinematic-button:hover {
       background-color: #0056b3;
       /* Warna latar belakang saat hover */
@@ -419,12 +430,10 @@
     }
 
   
-    #clossing-section .scene-background{
-      background-image: url("../asset/bc8.jpeg");
-      background-size: cover;
-      background-position: center;
-      height: 1000px;
-    }
+    #closing-section  {
+  background-image: url("./asset/bc7.jpeg");
+}
+
 
     @media (max-width: 768px) {
       .scene-content h2 {
@@ -825,7 +834,7 @@
           <option value="Hadir">Hadir</option>
           <option value="Tidak Hadir">Tidak Hadir</option>
         </select>
-        <button type="submit" class="cinematic-button px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700">
+        <button type="submit" class="cinematic-button px-6 py-3 bg--600 text-white rounded-full hover:bg-blue-700">
           KIRIM PESAN
         </button>
       </form>
@@ -837,20 +846,16 @@
     </div>
   </section>
 
-  <section id="clossing-section" class="scene">
-    <div class="scene-content">
-      <div class="scene-bacground"></div>
-      <h2 class="text-4xl font-bold mb-8 title">Doa dan Harapan</h2>
-      <blockquote class="text-xl italic mb-6">
-        Dengan penuh rasa syukur, kami memohon doa dan restu dari keluarga,
-        sahabat, dan seluruh hadirin. Semoga pernikahan kami menjadi awal
-        dari perjalanan panjang penuh cinta, kebahagiaan, dan keberkahan.
-      </blockquote>
+<section id="closing-section" class="scene py-16 px-6 md:px-12">
+  <div class="scene-content text-white-950 max-w-4xl mx-auto closing-bg rounded-xl p-10 closing-border">
+    <h2 class="text-4xl md:text-5xl font-bold mb-8 title text-center title-shadow">Doa dan Harapan</h2>
+    <div class="text-xl italic mb-6 text-center leading-relaxed opacity-90">
+      Dengan penuh rasa syukur, kami memohon doa dan restu dari keluarga,
+      sahabat, dan seluruh hadirin. Semoga pernikahan kami menjadi awal
+      dari perjalanan panjang penuh cinta, kebahagiaan, dan keberkahan.
     </div>
-    </div>
-    </div>
-  </section>
-
+  </div>
+</section>
 
   <div id="navigation">
     <div class="nav-dot" data-scene="hero"></div>
@@ -861,7 +866,7 @@
     <div class="nav-dot" data-scene="gift-section"></div>
     <div class="nav-dot active" data-scene="comment-section"></div>
 
-  <div class="nav-dot" data-scene="clossing-section"></div>
+  <div class="nav-dot" data-scene="closing-section"></div>
 
   <audio id="myAudio" autoplay>
     <source src="./audio/Payung Teduh - Akad (Official Music Video).mp3" type="audio/mpeg">
